@@ -1,0 +1,17 @@
+{
+  "name": "phaserkingdom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nick Shvelidze <captain@pirrate.me>",
+  "license": "MIT",
+  "dependencies": {
+    "bower": "^1.6.5",
+    "gulp": "^3.9.0",
+    "gulp-bower": "0.0.10",
+    "webpack-stream": "^2.1.1"
+  }
+}
