@@ -1,3 +1,5 @@
+import Coin from './coin.jsx'
+
 class Player extends Phaser.Sprite {
   constructor(game, x, y) {
     super(game, x, y, 'player');
@@ -11,6 +13,7 @@ class Player extends Phaser.Sprite {
     
     var leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 
     leftKey.onDown.add(event => {
       this.play('walking');
@@ -30,9 +33,10 @@ class Player extends Phaser.Sprite {
       this.play('still');
       this.body.velocity.x = 0;
     });
-  }
-
-  update() {
+    downKey.onDown.add(event => {
+      var coin = new Coin(game, this.x, this.y);
+      game.add.existing(coin);
+    });
   }
 }
 

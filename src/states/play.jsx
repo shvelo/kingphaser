@@ -3,6 +3,7 @@ import Player from '../objects/player.jsx'
 class PlayState extends Phaser.State {
   preload() {
     this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
+    this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
   }
 
   create() {
