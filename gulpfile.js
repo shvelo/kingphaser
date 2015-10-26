@@ -6,20 +6,9 @@ gulp.task('default', ['webpack']);
 
 gulp.task('webpack', function () {
   return gulp.src('src/game.jsx')
-    .pipe(webpack({
-      output: {
-        filename: 'game.js'
-      },
-      module: {
-        loaders: [
-          {
-            test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/,
-            loader: 'babel'
-          }
-        ]
-      }
-    }))
+    .pipe(webpack(
+      require('./webpack.config.js')
+    ))
     .pipe(gulp.dest('dist'));
 });
 
