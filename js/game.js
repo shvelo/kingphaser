@@ -163,14 +163,26 @@
 	    value: function preload() {
 	      this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
 	      this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
+	      this.load.image("ground", "assets/gfx/tiles.png");
 	    }
 	  }, {
 	    key: "create",
 	    value: function create() {
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
+	      this.physics.arcade.gravity.y = 100;
 
-	      var player = new _objectsPlayerJsx2["default"](this.game, this.world.centerX, this.world.centerY);
-	      this.add.existing(player);
+	      this.player = new _objectsPlayerJsx2["default"](this.game, this.world.centerX, this.world.centerY);
+	      this.add.existing(this.player);
+
+	      this.ground = this.add.sprite(0, this.world.height - 60, "ground");
+	      this.physics.enable(this.ground, Phaser.Physics.ARCADE);
+	      this.ground.body.immovable = true;
+	      this.ground.body.allowGravity = false;
+	    }
+	  }, {
+	    key: "update",
+	    value: function update() {
+	      this.physics.arcade.collide(this.player, this.ground);
 	    }
 	  }]);
 
@@ -216,6 +228,7 @@
 	    this.animations.add('still', [8, 8, 8, 9, 10], 2, true);
 
 	    game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.body.collideWorldBounds = true;
 
 	    this.play('still');
 
@@ -281,8 +294,6 @@
 	    game.physics.enable(this, Phaser.Physics.ARCADE);
 
 	    this.play('still');
-
-	    this.body.velocity.y = 100;
 	  }
 
 	  return Coin;

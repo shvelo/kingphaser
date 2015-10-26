@@ -8,6 +8,7 @@ class Player extends Phaser.Sprite {
     this.animations.add('still', [8, 8, 8, 9, 10], 2, true);
 
     game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.body.collideWorldBounds = true;
 
     this.play('still');
     

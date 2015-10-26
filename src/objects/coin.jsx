@@ -6,8 +6,6 @@ class Coin extends Phaser.Sprite {
     game.physics.enable(this, Phaser.Physics.ARCADE);
 
     this.play('still');
-
-    this.body.velocity.y = 100;
   }
 }
 
