@@ -5,10 +5,19 @@ var gulp = require('gulp'),
 gulp.task('default', ['webpack']);
 
 gulp.task('webpack', function () {
-  return gulp.src('src/game.js')
+  return gulp.src('src/game.jsx')
     .pipe(webpack({
       output: {
         filename: 'game.js'
+      },
+      module: {
+        loaders: [
+          {
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'babel'
+          }
+        ]
       }
     }))
     .pipe(gulp.dest('dist'));
