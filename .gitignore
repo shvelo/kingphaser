@@ -1,5 +1,5 @@
 .idea
 dist
 dist.zip
-lib
 node_modules
+bower_components

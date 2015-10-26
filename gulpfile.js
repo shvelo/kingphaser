@@ -2,16 +2,17 @@ var gulp = require('gulp'),
   webpack = require('webpack-stream'),
   bower = require('gulp-bower'),
   mainBowerFiles = require('main-bower-files'),
-  zip = require('gulp-zip');
+  zip = require('gulp-zip'),
+  del = require('del');
 
-gulp.task('default', ['webpack']);
+gulp.task('default', ['webpack', 'lib']);
 gulp.task('watch', function () {
   return gulp.watch('src/**', ['webpack']);
 });
 gulp.task('clean', function () {
-
+  return del('{dist/**,dist.zip}');
 });
-gulp.task('dist', ['copy-js', 'copy-bower', 'copy-html', 'copy-assets']);
+gulp.task('dist', ['copy-js', 'copy-lib', 'copy-html', 'copy-assets']);
 
 gulp.task('webpack', function () {
   return gulp.src('src/game.jsx')
@@ -23,6 +24,11 @@ gulp.task('webpack', function () {
 
 gulp.task('bower', function () {
   return bower()
+    .pipe(gulp.dest('bower_components'));
+});
+
+gulp.task('lib', ['bower'], function () {
+  return gulp.src(mainBowerFiles(), { base: "bower_components" })
     .pipe(gulp.dest('lib'));
 });
 
@@ -36,14 +42,14 @@ gulp.task('copy-html', function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy-bower', function () {
-  return gulp.src(mainBowerFiles(), { base: "lib" })
+gulp.task('copy-lib', function () {
+  return gulp.src("lib/**", { base: "lib" })
     .pipe(gulp.dest('dist/lib'));
 });
 
 gulp.task('copy-js', ['webpack'], function () {
   return gulp.src('js/**', { base: 'js' })
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('zip', function () {
