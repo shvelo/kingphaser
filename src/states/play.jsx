@@ -6,6 +6,8 @@ class PlayState extends Phaser.State {
   }
 
   create() {
+    this.physics.startSystem(Phaser.Physics.ARCADE);
+
     var player = new Player(this.game, this.world.centerX, this.world.centerY);
     this.add.existing(player);
   }
