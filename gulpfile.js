@@ -3,6 +3,9 @@ var gulp = require('gulp'),
   bower = require('gulp-bower');
 
 gulp.task('default', ['webpack']);
+gulp.task('watch', function () {
+  return gulp.watch('src/**', ['webpack']);
+});
 
 gulp.task('webpack', function () {
   return gulp.src('src/game.jsx')
