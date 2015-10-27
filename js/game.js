@@ -68,8 +68,10 @@
 	  function Game() {
 	    _classCallCheck(this, Game);
 
-	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 864, 480, Phaser.AUTO, 'game');
+	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 480, 320, Phaser.AUTO, 'game');
 	    window.game = this;
+
+	    this.antialias = false;
 
 	    this.state.add('menu', _statesMenuJsx2['default']);
 	    this.state.add('play', _statesPlayJsx2['default']);
@@ -171,6 +173,9 @@
 	  }, {
 	    key: "create",
 	    value: function create() {
+	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+	      this.stage.smoothed = false;
+
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
 	      this.physics.arcade.gravity.y = 1000;
 
