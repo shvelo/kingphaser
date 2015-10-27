@@ -3,7 +3,8 @@ var gulp = require('gulp'),
   bower = require('gulp-bower'),
   mainBowerFiles = require('main-bower-files'),
   zip = require('gulp-zip'),
-  del = require('del');
+  del = require('del'),
+  webserver = require('gulp-webserver');
 
 gulp.task('default', ['webpack', 'lib']);
 gulp.task('watch', function () {
@@ -13,6 +14,11 @@ gulp.task('clean', function () {
   return del('{dist/**,dist.zip}');
 });
 gulp.task('dist', ['copy-js', 'copy-lib', 'copy-html', 'copy-assets']);
+
+gulp.task('server', function () {
+  return gulp.src('.')
+    .pipe(webserver());
+});
 
 gulp.task('webpack', function () {
   return gulp.src('src/game.jsx')
