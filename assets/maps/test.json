@@ -11,8 +11,35 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":10,
+         "name":"objects",
+         "objects":[
+                {
+                 "height":30,
+                 "id":1,
+                 "name":"player",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"player",
+                 "visible":true,
+                 "width":56,
+                 "x":39,
+                 "y":258
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":100,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":1,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "properties":
     {

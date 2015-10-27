@@ -178,18 +178,22 @@
 	      this.stage.smoothed = false;
 	      this.game.renderer.renderSession.roundPixels = true;
 
-	      var map = this.add.tilemap("testmap");
-	      map.setCollisionByExclusion([]);
-	      map.addTilesetImage("tiles", "tiles");
-	      this.groundLayer = map.createLayer("layer1");
+	      this.map = this.add.tilemap("testmap");
+	      this.map.setCollisionByExclusion([]);
+	      this.map.addTilesetImage("tiles", "tiles");
+	      this.groundLayer = this.map.createLayer("layer1");
 	      this.groundLayer.resizeWorld();
+
+	      window.map = this.map;
 
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
 	      this.physics.arcade.gravity.y = 1000;
 
 	      this.stage.backgroundColor = "#E0F7FA";
 
-	      this.player = new _objectsPlayerJsx2["default"](this, 0, 0);
+	      var playerObj = _.findWhere(this.map.objects.objects, { name: "player" });
+
+	      this.player = new _objectsPlayerJsx2["default"](this, playerObj.x, playerObj.y);
 	      this.add.existing(this.player);
 
 	      this.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
