@@ -4,7 +4,8 @@ var gulp = require('gulp'),
   mainBowerFiles = require('main-bower-files'),
   zip = require('gulp-zip'),
   del = require('del'),
-  webserver = require('gulp-webserver');
+  webserver = require('gulp-webserver'),
+  ghPages = require('gulp-gh-pages');
 
 gulp.task('default', ['webpack', 'lib']);
 gulp.task('watch', function () {
@@ -18,6 +19,10 @@ gulp.task('dist', ['copy-js', 'copy-lib', 'copy-html', 'copy-assets']);
 gulp.task('server', function () {
   return gulp.src('.')
     .pipe(webserver());
+});
+gulp.task('deploy', ['dist'], function () {
+  return gulp.src('./dist/**')
+    .pipe(ghPages());
 });
 
 gulp.task('webpack', function () {
