@@ -1,5 +1,5 @@
 {
-  "name": "phaserkingdom",
+  "name": "kingphaser",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -7,6 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nick Shvelidze <captain@pirrate.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shvelo/kingphaser.git"
+  },
+  "homepage": "http://pirrate.me/kingphaser",
   "license": "MIT",
   "dependencies": {
     "babel-loader": "^5.3.2",
