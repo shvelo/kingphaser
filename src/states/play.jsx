@@ -1,4 +1,4 @@
-import Player from '../objects/player.jsx'
+import Player from '../objects/player.jsx';
 
 class PlayState extends Phaser.State {
   preload() {

@@ -1,4 +1,4 @@
-import Coin from './coin.jsx'
+import Coin from './coin.jsx';
 
 class Player extends Phaser.Sprite {
   constructor(state, x, y) {
@@ -48,4 +48,4 @@ class Player extends Phaser.Sprite {
   }
 }
 
-export default Player
+export default Player;

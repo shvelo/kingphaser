@@ -10,4 +10,4 @@ class Coin extends Phaser.Sprite {
   }
 }
 
-export default Coin
+export default Coin;
