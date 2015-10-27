@@ -176,6 +176,7 @@
 	    value: function create() {
 	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
 	      this.stage.smoothed = false;
+	      this.game.renderer.renderSession.roundPixels = true;
 
 	      var map = this.add.tilemap("testmap");
 	      map.setCollisionByExclusion([]);
@@ -191,7 +192,7 @@
 	      this.player = new _objectsPlayerJsx2["default"](this, 0, 0);
 	      this.add.existing(this.player);
 
-	      this.camera.follow(this.player);
+	      this.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
 
 	      this.coins = this.add.group();
 	      this.physics.enable(this.coins, Phaser.Physics.ARCADE);
