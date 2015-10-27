@@ -13,6 +13,9 @@ class PlayState extends Phaser.State {
     this.stage.smoothed = false;
     this.game.renderer.renderSession.roundPixels = true;
 
+    this.physics.startSystem(Phaser.Physics.ARCADE);
+    this.physics.arcade.gravity.y = 1000;
+
     this.map = this.add.tilemap("testmap");
     this.map.setCollisionByExclusion([]);
     this.map.addTilesetImage("tiles", "tiles");
@@ -20,9 +23,6 @@ class PlayState extends Phaser.State {
     this.groundLayer.resizeWorld();
 
     window.map = this.map;
-
-    this.physics.startSystem(Phaser.Physics.ARCADE);
-    this.physics.arcade.gravity.y = 1000;
 
     this.stage.backgroundColor = "#E0F7FA";
 

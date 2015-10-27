@@ -5,8 +5,10 @@ class Player extends Phaser.Sprite {
     super(state.game, x, y, 'player');
     this.state = state;
 
+    this.speed = 60;
+
     this.anchor.setTo(.5, .5);
-    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
     this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -28,7 +30,7 @@ class Player extends Phaser.Sprite {
         this.play('still');
 
       this.scale.x = -1;
-      this.body.velocity.x = -80;
+      this.body.velocity.x = -this.speed;
     });
     rightKey.onDown.add(event => {
       if (!this.body.blocked.right)
@@ -36,7 +38,7 @@ class Player extends Phaser.Sprite {
       else
         this.play('still');
       this.scale.x = 1;
-      this.body.velocity.x = 80;
+      this.body.velocity.x = this.speed;
     });
     leftKey.onUp.add(event => {
       this.play('still');
