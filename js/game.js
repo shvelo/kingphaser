@@ -168,7 +168,8 @@
 	    value: function preload() {
 	      this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
 	      this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
-	      this.load.image("ground", "assets/gfx/tiles.png");
+	      this.load.image("tiles", "assets/gfx/tiles.png");
+	      this.load.tilemap("testmap", "assets/maps/test.json", null, Phaser.Tilemap.TILED_JSON);
 	    }
 	  }, {
 	    key: "create",
@@ -176,18 +177,21 @@
 	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
 	      this.stage.smoothed = false;
 
+	      var map = this.add.tilemap("testmap");
+	      map.setCollisionByExclusion([]);
+	      map.addTilesetImage("tiles", "tiles");
+	      this.groundLayer = map.createLayer("layer1");
+	      this.groundLayer.resizeWorld();
+
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
 	      this.physics.arcade.gravity.y = 1000;
 
 	      this.stage.backgroundColor = "#E0F7FA";
 
-	      this.player = new _objectsPlayerJsx2["default"](this, this.world.centerX, this.world.centerY);
+	      this.player = new _objectsPlayerJsx2["default"](this, 0, 0);
 	      this.add.existing(this.player);
 
-	      this.ground = this.add.sprite(0, this.world.height - 60, "ground");
-	      this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-	      this.ground.body.immovable = true;
-	      this.ground.body.allowGravity = false;
+	      this.camera.follow(this.player);
 
 	      this.coins = this.add.group();
 	      this.physics.enable(this.coins, Phaser.Physics.ARCADE);
@@ -195,8 +199,8 @@
 	  }, {
 	    key: "update",
 	    value: function update() {
-	      this.physics.arcade.collide(this.player, this.ground);
-	      this.physics.arcade.collide(this.coins, this.ground);
+	      this.physics.arcade.collide(this.player, this.groundLayer);
+	      this.physics.arcade.collide(this.coins, this.groundLayer);
 	      this.physics.arcade.overlap(this.player, this.coins, function (player, coin) {
 	        if (coin.canPickUp) {
 	          coin.kill();
