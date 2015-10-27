@@ -9,7 +9,9 @@ class PlayState extends Phaser.State {
 
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
-    this.physics.arcade.gravity.y = 500;
+    this.physics.arcade.gravity.y = 1000;
+
+    this.stage.backgroundColor = "#E0F7FA";
 
     this.player = new Player(this, this.world.centerX, this.world.centerY);
     this.add.existing(this.player);

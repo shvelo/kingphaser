@@ -169,7 +169,9 @@
 	    key: "create",
 	    value: function create() {
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
-	      this.physics.arcade.gravity.y = 500;
+	      this.physics.arcade.gravity.y = 1000;
+
+	      this.stage.backgroundColor = "#E0F7FA";
 
 	      this.player = new _objectsPlayerJsx2["default"](this, this.world.centerX, this.world.centerY);
 	      this.add.existing(this.player);
@@ -233,6 +235,7 @@
 
 	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	    this.body.collideWorldBounds = true;
+	    this.body.mass = 100;
 
 	    this.play('still');
 
@@ -298,6 +301,7 @@
 
 	    game.physics.enable(this, Phaser.Physics.ARCADE);
 	    this.body.bounce.y = 0.5;
+	    this.body.mass = 5;
 
 	    this.play('still');
 	  }
