@@ -33,7 +33,7 @@ gulp.task('bower', function () {
     .pipe(gulp.dest('bower_components'));
 });
 
-gulp.task('lib', ['bower'], function () {
+gulp.task('lib', function () {
   return gulp.src(mainBowerFiles(), { base: "bower_components" })
     .pipe(gulp.dest('lib'));
 });

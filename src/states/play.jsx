@@ -9,19 +9,23 @@ class PlayState extends Phaser.State {
 
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
-    this.physics.arcade.gravity.y = 100;
+    this.physics.arcade.gravity.y = 500;
 
-    this.player = new Player(this.game, this.world.centerX, this.world.centerY);
+    this.player = new Player(this, this.world.centerX, this.world.centerY);
     this.add.existing(this.player);
 
     this.ground = this.add.sprite(0, this.world.height - 60, "ground");
     this.physics.enable(this.ground, Phaser.Physics.ARCADE);
     this.ground.body.immovable = true;
     this.ground.body.allowGravity = false;
+
+    this.coins = this.add.group();
+    this.physics.enable(this.coins, Phaser.Physics.ARCADE);
   }
 
   update() {
     this.physics.arcade.collide(this.player, this.ground);
+    this.physics.arcade.collide(this.coins, this.ground);
   }
 }
 
