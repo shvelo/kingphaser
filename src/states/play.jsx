@@ -4,6 +4,7 @@ class PlayState extends Phaser.State {
   preload() {
     this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
     this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
+    this.load.image("gun", "assets/gfx/gun.png");
     this.load.image("tiles", "assets/gfx/tiles.png");
     this.load.tilemap("testmap", "assets/maps/test.json", null, Phaser.Tilemap.TILED_JSON);
   }

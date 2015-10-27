@@ -168,6 +168,7 @@
 	    value: function preload() {
 	      this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
 	      this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
+	      this.load.image("gun", "assets/gfx/gun.png");
 	      this.load.image("tiles", "assets/gfx/tiles.png");
 	      this.load.tilemap("testmap", "assets/maps/test.json", null, Phaser.Tilemap.TILED_JSON);
 	    }
@@ -264,7 +265,7 @@
 	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 	    this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
-	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.game.physics.enable(this);
 	    this.body.collideWorldBounds = true;
 	    this.body.mass = 100;
 
@@ -275,6 +276,11 @@
 	    var leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 	    var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 	    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+
+	    this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
+	    this.game.physics.enable(this.gun);
+	    this.gun.anchor.setTo(0.5, 0.5);
+	    this.gun.body.allowGravity = 0;
 
 	    leftKey.onDown.add(function (event) {
 	      if (!_this.body.blocked.left) _this.play('walking');else _this.play('still');
@@ -301,6 +307,12 @@
 	  }
 
 	  _createClass(Player, [{
+	    key: 'update',
+	    value: function update() {
+	      this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
+	      console.log(this.game.physics.arcade.angleToPointer(this.gun));
+	    }
+	  }, {
 	    key: 'dropCoin',
 	    value: function dropCoin() {
 	      if (this.coins < 1) return;

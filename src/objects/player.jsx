@@ -11,7 +11,7 @@ class Player extends Phaser.Sprite {
     this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
     this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
     this.body.mass = 100;
 
@@ -22,6 +22,11 @@ class Player extends Phaser.Sprite {
     var leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+
+    this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
+    this.game.physics.enable(this.gun);
+    this.gun.anchor.setTo(0.5, 0.5);
+    this.gun.body.allowGravity = 0;
 
     leftKey.onDown.add(event => {
       if (!this.body.blocked.left)
@@ -51,6 +56,11 @@ class Player extends Phaser.Sprite {
     downKey.onDown.add(event => {
       this.dropCoin();
     });
+  }
+
+  update() {
+    this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
+    console.log( this.game.physics.arcade.angleToPointer(this.gun));
   }
 
   dropCoin() {
