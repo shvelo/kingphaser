@@ -8,7 +8,7 @@ var gulp = require('gulp'),
   ghPages = require('gulp-gh-pages');
 
 gulp.task('default', ['webpack', 'lib']);
-gulp.task('watch', function () {
+gulp.task('watch', ['default'], function () {
   return gulp.watch('src/**', ['webpack']);
 });
 gulp.task('clean', function () {

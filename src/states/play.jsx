@@ -28,6 +28,14 @@ class PlayState extends Phaser.State {
   update() {
     this.physics.arcade.collide(this.player, this.ground);
     this.physics.arcade.collide(this.coins, this.ground);
+    this.physics.arcade.overlap(this.player, this.coins, function (player, coin) {
+      if(coin.canPickUp) {
+        coin.kill();
+        player.coins += 1;
+      }
+    });
+
+    this.game.debug.text(this.player.coins, this.world.width - 30, 20, "black", "16px sans-serif");
   }
 }
 
