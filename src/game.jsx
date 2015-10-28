@@ -1,3 +1,4 @@
+import BootState from './states/boot.jsx';
 import MenuState from './states/menu.jsx';
 import PlayState from './states/play.jsx';
 
@@ -6,12 +7,11 @@ class Game extends Phaser.Game {
     super(480, 320, Phaser.AUTO, 'game');
     window.game = this;
 
-    this.antialias = false;
-
+    this.state.add('boot', BootState);
     this.state.add('menu', MenuState);
     this.state.add('play', PlayState);
 
-    this.state.start('play');
+    this.state.start('boot');
   }
 }
 

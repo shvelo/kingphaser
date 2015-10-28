@@ -54,11 +54,15 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _statesMenuJsx = __webpack_require__(1);
+	var _statesBootJsx = __webpack_require__(1);
+
+	var _statesBootJsx2 = _interopRequireDefault(_statesBootJsx);
+
+	var _statesMenuJsx = __webpack_require__(2);
 
 	var _statesMenuJsx2 = _interopRequireDefault(_statesMenuJsx);
 
-	var _statesPlayJsx = __webpack_require__(2);
+	var _statesPlayJsx = __webpack_require__(3);
 
 	var _statesPlayJsx2 = _interopRequireDefault(_statesPlayJsx);
 
@@ -71,12 +75,11 @@
 	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 480, 320, Phaser.AUTO, 'game');
 	    window.game = this;
 
-	    this.antialias = false;
-
+	    this.state.add('boot', _statesBootJsx2['default']);
 	    this.state.add('menu', _statesMenuJsx2['default']);
 	    this.state.add('play', _statesPlayJsx2['default']);
 
-	    this.state.start('play');
+	    this.state.start('boot');
 	  }
 
 	  return Game;
@@ -86,6 +89,54 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BootState = (function (_Phaser$State) {
+	  _inherits(BootState, _Phaser$State);
+
+	  function BootState() {
+	    _classCallCheck(this, BootState);
+
+	    _get(Object.getPrototypeOf(BootState.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(BootState, [{
+	    key: 'preload',
+	    value: function preload() {}
+	  }, {
+	    key: 'create',
+	    value: function create() {
+	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+	      this.stage.smoothed = false;
+	      this.game.antialias = false;
+	      this.game.renderer.renderSession.roundPixels = true;
+
+	      this.state.start('play');
+	    }
+	  }]);
+
+	  return BootState;
+	})(Phaser.State);
+
+	exports['default'] = BootState;
+	module.exports = exports['default'];
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -131,7 +182,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -150,7 +201,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _objectsPlayerJsx = __webpack_require__(3);
+	var _objectsPlayerJsx = __webpack_require__(4);
 
 	var _objectsPlayerJsx2 = _interopRequireDefault(_objectsPlayerJsx);
 
@@ -225,7 +276,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -244,7 +295,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coinJsx = __webpack_require__(4);
+	var _coinJsx = __webpack_require__(5);
 
 	var _coinJsx2 = _interopRequireDefault(_coinJsx);
 
@@ -330,7 +381,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
