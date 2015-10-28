@@ -169,20 +169,26 @@
 	    key: "create",
 	    value: function create() {
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
-	      this.physics.arcade.gravity.y = 100;
+	      this.physics.arcade.gravity.y = 1000;
 
-	      this.player = new _objectsPlayerJsx2["default"](this.game, this.world.centerX, this.world.centerY);
+	      this.stage.backgroundColor = "#E0F7FA";
+
+	      this.player = new _objectsPlayerJsx2["default"](this, this.world.centerX, this.world.centerY);
 	      this.add.existing(this.player);
 
 	      this.ground = this.add.sprite(0, this.world.height - 60, "ground");
 	      this.physics.enable(this.ground, Phaser.Physics.ARCADE);
 	      this.ground.body.immovable = true;
 	      this.ground.body.allowGravity = false;
+
+	      this.coins = this.add.group();
+	      this.physics.enable(this.coins, Phaser.Physics.ARCADE);
 	    }
 	  }, {
 	    key: "update",
 	    value: function update() {
 	      this.physics.arcade.collide(this.player, this.ground);
+	      this.physics.arcade.collide(this.coins, this.ground);
 	    }
 	  }]);
 
@@ -217,18 +223,19 @@
 	var Player = (function (_Phaser$Sprite) {
 	  _inherits(Player, _Phaser$Sprite);
 
-	  function Player(game, x, y) {
+	  function Player(state, x, y) {
 	    var _this = this;
 
 	    _classCallCheck(this, Player);
 
-	    _get(Object.getPrototypeOf(Player.prototype), 'constructor', this).call(this, game, x, y, 'player');
+	    _get(Object.getPrototypeOf(Player.prototype), 'constructor', this).call(this, state.game, x, y, 'player');
 	    this.anchor.setTo(.5, .5);
 	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
-	    this.animations.add('still', [8, 8, 8, 9, 10], 2, true);
+	    this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
-	    game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
 	    this.body.collideWorldBounds = true;
+	    this.body.mass = 100;
 
 	    this.play('still');
 
@@ -237,14 +244,15 @@
 	    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 
 	    leftKey.onDown.add(function (event) {
-	      _this.play('walking');
+	      if (!_this.body.blocked.left) _this.play('walking');else _this.play('still');
+
 	      _this.scale.x = -1;
-	      _this.body.velocity.x = -100;
+	      _this.body.velocity.x = -80;
 	    });
 	    rightKey.onDown.add(function (event) {
-	      _this.play('walking');
+	      if (!_this.body.blocked.right) _this.play('walking');else _this.play('still');
 	      _this.scale.x = 1;
-	      _this.body.velocity.x = 100;
+	      _this.body.velocity.x = 80;
 	    });
 	    leftKey.onUp.add(function (event) {
 	      _this.play('still');
@@ -255,8 +263,8 @@
 	      _this.body.velocity.x = 0;
 	    });
 	    downKey.onDown.add(function (event) {
-	      var coin = new _coinJsx2['default'](game, _this.x, _this.y);
-	      game.add.existing(coin);
+	      var coin = new _coinJsx2['default'](_this.game, _this.x, _this.y);
+	      state.coins.add(coin);
 	    });
 	  }
 
@@ -289,9 +297,11 @@
 	    _classCallCheck(this, Coin);
 
 	    _get(Object.getPrototypeOf(Coin.prototype), 'constructor', this).call(this, game, x, y, 'coin');
-	    this.animations.add('still', null, 60, true);
+	    this.animations.add('still', null, 10, true);
 
 	    game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.body.bounce.y = 0.5;
+	    this.body.mass = 5;
 
 	    this.play('still');
 	  }

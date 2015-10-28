@@ -1,5 +1,5 @@
-import MenuState from './states/menu.jsx'
-import PlayState from './states/play.jsx'
+import MenuState from './states/menu.jsx';
+import PlayState from './states/play.jsx';
 
 class Game extends Phaser.Game {
   constructor() {
