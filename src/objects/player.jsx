@@ -60,7 +60,6 @@ class Player extends Phaser.Sprite {
 
   update() {
     this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
-    console.log( this.game.physics.arcade.angleToPointer(this.gun));
   }
 
   dropCoin() {

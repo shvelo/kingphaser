@@ -226,9 +226,7 @@
 	  }, {
 	    key: "create",
 	    value: function create() {
-	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
-	      this.stage.smoothed = false;
-	      this.game.renderer.renderSession.roundPixels = true;
+	      document.getElementById('preloader').remove();
 
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
 	      this.physics.arcade.gravity.y = 1000;
@@ -361,7 +359,6 @@
 	    key: 'update',
 	    value: function update() {
 	      this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
-	      console.log(this.game.physics.arcade.angleToPointer(this.gun));
 	    }
 	  }, {
 	    key: 'dropCoin',
