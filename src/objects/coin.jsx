@@ -8,6 +8,9 @@ class Coin extends Phaser.Sprite {
     this.body.mass = 5;
 
     this.play('still');
+    setTimeout(event => {
+      this.canPickUp = true;
+    }, 1000);
   }
 }
 

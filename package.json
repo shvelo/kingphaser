@@ -1,5 +1,5 @@
 {
-  "name": "phaserkingdom",
+  "name": "kingphaser",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -7,6 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nick Shvelidze <captain@pirrate.me>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shvelo/kingphaser.git"
+  },
+  "homepage": "http://pirrate.me/kingphaser",
   "license": "MIT",
   "dependencies": {
     "babel-loader": "^5.3.2",
@@ -14,6 +19,7 @@
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-bower": "0.0.10",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-webserver": "^0.9.1",
     "gulp-zip": "^3.0.2",
     "main-bower-files": "^2.9.0",

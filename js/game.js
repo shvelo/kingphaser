@@ -68,9 +68,14 @@
 	  function Game() {
 	    _classCallCheck(this, Game);
 
-	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 864, 480, Phaser.AUTO, 'game');
+	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 480, 320, Phaser.AUTO, 'game');
+	    window.game = this;
+
+	    this.antialias = false;
+
 	    this.state.add('menu', _statesMenuJsx2['default']);
 	    this.state.add('play', _statesPlayJsx2['default']);
+
 	    this.state.start('play');
 	  }
 
@@ -163,23 +168,36 @@
 	    value: function preload() {
 	      this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
 	      this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
-	      this.load.image("ground", "assets/gfx/tiles.png");
+	      this.load.image("gun", "assets/gfx/gun.png");
+	      this.load.image("tiles", "assets/gfx/tiles.png");
+	      this.load.tilemap("testmap", "assets/maps/test.json", null, Phaser.Tilemap.TILED_JSON);
 	    }
 	  }, {
 	    key: "create",
 	    value: function create() {
+	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+	      this.stage.smoothed = false;
+	      this.game.renderer.renderSession.roundPixels = true;
+
 	      this.physics.startSystem(Phaser.Physics.ARCADE);
 	      this.physics.arcade.gravity.y = 1000;
 
+	      this.map = this.add.tilemap("testmap");
+	      this.map.setCollisionByExclusion([]);
+	      this.map.addTilesetImage("tiles", "tiles");
+	      this.groundLayer = this.map.createLayer("layer1");
+	      this.groundLayer.resizeWorld();
+
+	      window.map = this.map;
+
 	      this.stage.backgroundColor = "#E0F7FA";
 
-	      this.player = new _objectsPlayerJsx2["default"](this, this.world.centerX, this.world.centerY);
+	      var playerObj = _.findWhere(this.map.objects.objects, { name: "player" });
+
+	      this.player = new _objectsPlayerJsx2["default"](this, playerObj.x, playerObj.y);
 	      this.add.existing(this.player);
 
-	      this.ground = this.add.sprite(0, this.world.height - 60, "ground");
-	      this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-	      this.ground.body.immovable = true;
-	      this.ground.body.allowGravity = false;
+	      this.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
 
 	      this.coins = this.add.group();
 	      this.physics.enable(this.coins, Phaser.Physics.ARCADE);
@@ -187,8 +205,16 @@
 	  }, {
 	    key: "update",
 	    value: function update() {
-	      this.physics.arcade.collide(this.player, this.ground);
-	      this.physics.arcade.collide(this.coins, this.ground);
+	      this.physics.arcade.collide(this.player, this.groundLayer);
+	      this.physics.arcade.collide(this.coins, this.groundLayer);
+	      this.physics.arcade.overlap(this.player, this.coins, function (player, coin) {
+	        if (coin.canPickUp) {
+	          coin.kill();
+	          player.coins += 1;
+	        }
+	      });
+
+	      this.game.debug.text(this.player.coins, this.world.width - 30, 20, "black", "16px sans-serif");
 	    }
 	  }]);
 
@@ -207,6 +233,8 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -229,13 +257,19 @@
 	    _classCallCheck(this, Player);
 
 	    _get(Object.getPrototypeOf(Player.prototype), 'constructor', this).call(this, state.game, x, y, 'player');
+	    this.state = state;
+
+	    this.speed = 60;
+
 	    this.anchor.setTo(.5, .5);
-	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 	    this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
-	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.game.physics.enable(this);
 	    this.body.collideWorldBounds = true;
 	    this.body.mass = 100;
+
+	    this.coins = 10;
 
 	    this.play('still');
 
@@ -243,16 +277,21 @@
 	    var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 	    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 
+	    this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
+	    this.game.physics.enable(this.gun);
+	    this.gun.anchor.setTo(0.5, 0.5);
+	    this.gun.body.allowGravity = 0;
+
 	    leftKey.onDown.add(function (event) {
 	      if (!_this.body.blocked.left) _this.play('walking');else _this.play('still');
 
 	      _this.scale.x = -1;
-	      _this.body.velocity.x = -80;
+	      _this.body.velocity.x = -_this.speed;
 	    });
 	    rightKey.onDown.add(function (event) {
 	      if (!_this.body.blocked.right) _this.play('walking');else _this.play('still');
 	      _this.scale.x = 1;
-	      _this.body.velocity.x = 80;
+	      _this.body.velocity.x = _this.speed;
 	    });
 	    leftKey.onUp.add(function (event) {
 	      _this.play('still');
@@ -263,10 +302,26 @@
 	      _this.body.velocity.x = 0;
 	    });
 	    downKey.onDown.add(function (event) {
-	      var coin = new _coinJsx2['default'](_this.game, _this.x, _this.y);
-	      state.coins.add(coin);
+	      _this.dropCoin();
 	    });
 	  }
+
+	  _createClass(Player, [{
+	    key: 'update',
+	    value: function update() {
+	      this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
+	      console.log(this.game.physics.arcade.angleToPointer(this.gun));
+	    }
+	  }, {
+	    key: 'dropCoin',
+	    value: function dropCoin() {
+	      if (this.coins < 1) return;
+
+	      var coin = new _coinJsx2['default'](this.game, this.x, this.y);
+	      this.state.coins.add(coin);
+	      this.coins -= 1;
+	    }
+	  }]);
 
 	  return Player;
 	})(Phaser.Sprite);
@@ -294,6 +349,8 @@
 	  _inherits(Coin, _Phaser$Sprite);
 
 	  function Coin(game, x, y) {
+	    var _this = this;
+
 	    _classCallCheck(this, Coin);
 
 	    _get(Object.getPrototypeOf(Coin.prototype), 'constructor', this).call(this, game, x, y, 'coin');
@@ -304,6 +361,9 @@
 	    this.body.mass = 5;
 
 	    this.play('still');
+	    setTimeout(function (event) {
+	      _this.canPickUp = true;
+	    }, 1000);
 	  }
 
 	  return Coin;

@@ -22,4 +22,5 @@ html, body {
 
 #game canvas {
   margin: 0 auto;
+  image-rendering: pixelated;
 }

@@ -1,22 +1,28 @@
 {
-  "name": "phaserkingdom",
-  "description": "",
+  "name": "kingphaser",
+  "description": "A simple game in Phaser",
   "main": "index.html",
   "authors": [
     "Nick Shvelidze <captain@pirrate.me>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shvelo/kingphaser.git"
+  },
   "license": "MIT",
-  "moduleType": [],
-  "homepage": "",
+  "homepage": "http://pirrate.me/kingphaser",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "dist",
+    "dist.zip"
   ],
   "dependencies": {
-    "phaser": "~2.4.4"
+    "phaser": "~2.4.4",
+    "lodash": "~3.10.1"
   }
 }
