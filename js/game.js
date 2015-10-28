@@ -54,11 +54,15 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _statesMenuJsx = __webpack_require__(1);
+	var _statesBootJsx = __webpack_require__(1);
+
+	var _statesBootJsx2 = _interopRequireDefault(_statesBootJsx);
+
+	var _statesMenuJsx = __webpack_require__(2);
 
 	var _statesMenuJsx2 = _interopRequireDefault(_statesMenuJsx);
 
-	var _statesPlayJsx = __webpack_require__(2);
+	var _statesPlayJsx = __webpack_require__(3);
 
 	var _statesPlayJsx2 = _interopRequireDefault(_statesPlayJsx);
 
@@ -71,12 +75,11 @@
 	    _get(Object.getPrototypeOf(Game.prototype), 'constructor', this).call(this, 480, 320, Phaser.AUTO, 'game');
 	    window.game = this;
 
-	    this.antialias = false;
-
+	    this.state.add('boot', _statesBootJsx2['default']);
 	    this.state.add('menu', _statesMenuJsx2['default']);
 	    this.state.add('play', _statesPlayJsx2['default']);
 
-	    this.state.start('play');
+	    this.state.start('boot');
 	  }
 
 	  return Game;
@@ -86,6 +89,54 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BootState = (function (_Phaser$State) {
+	  _inherits(BootState, _Phaser$State);
+
+	  function BootState() {
+	    _classCallCheck(this, BootState);
+
+	    _get(Object.getPrototypeOf(BootState.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(BootState, [{
+	    key: 'preload',
+	    value: function preload() {}
+	  }, {
+	    key: 'create',
+	    value: function create() {
+	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+	      this.stage.smoothed = false;
+	      this.game.antialias = false;
+	      this.game.renderer.renderSession.roundPixels = true;
+
+	      this.state.start('play');
+	    }
+	  }]);
+
+	  return BootState;
+	})(Phaser.State);
+
+	exports['default'] = BootState;
+	module.exports = exports['default'];
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -131,7 +182,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -150,7 +201,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _objectsPlayerJsx = __webpack_require__(3);
+	var _objectsPlayerJsx = __webpack_require__(4);
 
 	var _objectsPlayerJsx2 = _interopRequireDefault(_objectsPlayerJsx);
 
@@ -168,15 +219,17 @@
 	    value: function preload() {
 	      this.load.spritesheet("player", "assets/gfx/king.png", 64, 64);
 	      this.load.spritesheet("coin", "assets/gfx/coin.png", 10, 10);
+	      this.load.image("gun", "assets/gfx/gun.png");
 	      this.load.image("tiles", "assets/gfx/tiles.png");
 	      this.load.tilemap("testmap", "assets/maps/test.json", null, Phaser.Tilemap.TILED_JSON);
 	    }
 	  }, {
 	    key: "create",
 	    value: function create() {
-	      this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
-	      this.stage.smoothed = false;
-	      this.game.renderer.renderSession.roundPixels = true;
+	      document.getElementById('preloader').remove();
+
+	      this.physics.startSystem(Phaser.Physics.ARCADE);
+	      this.physics.arcade.gravity.y = 1000;
 
 	      this.map = this.add.tilemap("testmap");
 	      this.map.setCollisionByExclusion([]);
@@ -185,9 +238,6 @@
 	      this.groundLayer.resizeWorld();
 
 	      window.map = this.map;
-
-	      this.physics.startSystem(Phaser.Physics.ARCADE);
-	      this.physics.arcade.gravity.y = 1000;
 
 	      this.stage.backgroundColor = "#E0F7FA";
 
@@ -224,7 +274,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -243,7 +293,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _coinJsx = __webpack_require__(4);
+	var _coinJsx = __webpack_require__(5);
 
 	var _coinJsx2 = _interopRequireDefault(_coinJsx);
 
@@ -258,11 +308,13 @@
 	    _get(Object.getPrototypeOf(Player.prototype), 'constructor', this).call(this, state.game, x, y, 'player');
 	    this.state = state;
 
+	    this.speed = 60;
+
 	    this.anchor.setTo(.5, .5);
-	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 10, true);
+	    this.animations.add('walking', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 	    this.animations.add('still', [8, 8, 8, 8, 9, 10, 9, 10, 9, 10, 9], 2, true);
 
-	    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+	    this.game.physics.enable(this);
 	    this.body.collideWorldBounds = true;
 	    this.body.mass = 100;
 
@@ -274,16 +326,21 @@
 	    var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 	    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 
+	    this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
+	    this.game.physics.enable(this.gun);
+	    this.gun.anchor.setTo(0.5, 0.5);
+	    this.gun.body.allowGravity = 0;
+
 	    leftKey.onDown.add(function (event) {
 	      if (!_this.body.blocked.left) _this.play('walking');else _this.play('still');
 
 	      _this.scale.x = -1;
-	      _this.body.velocity.x = -80;
+	      _this.body.velocity.x = -_this.speed;
 	    });
 	    rightKey.onDown.add(function (event) {
 	      if (!_this.body.blocked.right) _this.play('walking');else _this.play('still');
 	      _this.scale.x = 1;
-	      _this.body.velocity.x = 80;
+	      _this.body.velocity.x = _this.speed;
 	    });
 	    leftKey.onUp.add(function (event) {
 	      _this.play('still');
@@ -299,6 +356,11 @@
 	  }
 
 	  _createClass(Player, [{
+	    key: 'update',
+	    value: function update() {
+	      this.gun.rotation = this.game.physics.arcade.angleToPointer(this.gun) - 0.9;
+	    }
+	  }, {
 	    key: 'dropCoin',
 	    value: function dropCoin() {
 	      if (this.coins < 1) return;
@@ -316,7 +378,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
