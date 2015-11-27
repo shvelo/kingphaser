@@ -22,6 +22,7 @@ class Player extends Phaser.Sprite {
     var leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    var upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
 
     this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
     this.game.physics.enable(this.gun);
@@ -56,6 +57,9 @@ class Player extends Phaser.Sprite {
     downKey.onDown.add(event => {
       this.dropCoin();
     });
+    upKey.onDown.add(event => {
+      this.jump();
+    });
   }
 
   update() {
@@ -69,6 +73,11 @@ class Player extends Phaser.Sprite {
     var coin = new Coin(this.game, this.x, this.y);
     this.state.coins.add(coin);
     this.coins -= 1;
+  }
+
+  jump() {
+    if(this.body.blocked.down)
+      this.body.velocity.y = -200;
   }
 }
 

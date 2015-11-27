@@ -276,6 +276,7 @@
 	    var leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 	    var rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 	    var downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+	    var upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
 
 	    this.gun = this.addChild(new Phaser.Sprite(this.game, -1, 8, "gun"));
 	    this.game.physics.enable(this.gun);
@@ -304,6 +305,9 @@
 	    downKey.onDown.add(function (event) {
 	      _this.dropCoin();
 	    });
+	    upKey.onDown.add(function (event) {
+	      _this.jump();
+	    });
 	  }
 
 	  _createClass(Player, [{
@@ -320,6 +324,11 @@
 	      var coin = new _coinJsx2['default'](this.game, this.x, this.y);
 	      this.state.coins.add(coin);
 	      this.coins -= 1;
+	    }
+	  }, {
+	    key: 'jump',
+	    value: function jump() {
+	      if (this.body.blocked.down) this.body.velocity.y = -200;
 	    }
 	  }]);
 
