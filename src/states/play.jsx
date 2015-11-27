@@ -10,9 +10,7 @@ class PlayState extends Phaser.State {
   }
 
   create() {
-    this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
-    this.stage.smoothed = false;
-    this.game.renderer.renderSession.roundPixels = true;
+    document.getElementById('preloader').remove();
 
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.y = 1000;
