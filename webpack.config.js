@@ -1,14 +1,15 @@
 module.exports = {
+  mode: 'development',
   entry: "./src/game.jsx",
   output: {
     filename: 'game.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel'
+        loader: 'babel-loader'
       }
     ]
   }

@@ -14,6 +14,7 @@ class Player extends Phaser.Sprite {
     this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
     this.body.mass = 100;
+    this.body.offset.y = -4;
 
     this.coins = 10;
 

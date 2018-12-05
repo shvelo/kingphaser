@@ -25,7 +25,7 @@ class PlayState extends Phaser.State {
 
     this.stage.backgroundColor = "#E0F7FA";
 
-    var playerObj = _.findWhere(this.map.objects.objects, { name: "player" });
+    var playerObj = _.find(this.map.objects.objects, { name: "player" });
 
     this.player = new Player(this, playerObj.x, playerObj.y);
     this.add.existing(this.player);
